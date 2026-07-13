@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miller Pilongo — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171A21;
+    --panel:#1D2129;
+    --paper:#ECE7DC;
+    --cream:#F5F1E7;
+    --cobalt:#3B5FE0;
+    --coral:#FF6B4A;
+    --line: rgba(236,231,220,0.14);
+    --muted: rgba(236,231,220,0.58);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .rings{
+    position:fixed; left:0; top:0; bottom:0; width:56px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:38px; z-index:5;
+  }
+  .rings span{
+    width:18px; height:18px; border-radius:50%;
+    border:2px solid rgba(236,231,220,0.22);
+    background:radial-gradient(circle at 35% 35%, rgba(0,0,0,0.5), transparent 70%);
+  }
+  @media (max-width:860px){ .rings{display:none;} }
+
+  .frame{ max-width:900px; margin:0 auto; padding:64px 32px 100px 96px; }
+  @media (max-width:860px){ .frame{ padding:48px 20px 80px; } }
+
+  header.masthead{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:8px;
+    flex-wrap:wrap; gap:20px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--coral); margin-bottom:10px;
+  }
+  h1.name{
+    font-family:'Fraunces', serif; font-weight:600; font-size:clamp(34px,5vw,52px);
+    line-height:1.05; letter-spacing:-0.01em;
+  }
+  .role{ font-family:'IBM Plex Mono', monospace; font-size:14px; color:var(--muted); margin-top:10px; }
+  
+  .headshot-mark{
+    width:64px; height:64px; border-radius:50%;
+    background: conic-gradient(from 210deg, var(--cobalt), var(--coral), var(--cobalt));
+    flex-shrink:0; overflow:hidden; border: 2px solid var(--line);
+  }
+  .headshot-mark img{ 
+    width:100%; height:100%; object-fit:cover; display:block; 
+  }
+
+  .banner{
+    position:relative; width:100%; height:200px; border-radius:12px;
+    margin-bottom:28px; overflow:hidden; border:1px solid var(--line);
+  }
+  @media (max-width:600px){ .banner{ height:140px; } }
+  .banner img{ 
+    width:100%; height:100%; object-fit:cover; display:block; 
+  }
+
+  nav.tabs{ display:flex; gap:6px; margin-top:36px; position:relative; flex-wrap:wrap; }
+  nav.tabs button{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; letter-spacing:.04em;
+    background: var(--panel); color: var(--muted); border:1px solid var(--line);
+    border-bottom:none; padding:12px 20px 14px; border-radius:8px 8px 0 0;
+    cursor:pointer; position:relative; top:1px;
+    transition: color .2s ease, background .2s ease, transform .15s ease;
+  }
+  nav.tabs button .idx{ color: var(--coral); margin-right:8px; }
+  nav.tabs button:hover{ color:var(--cream); transform:translateY(-2px); }
+  nav.tabs button.active{ background: var(--cream); color: var(--ink); font-weight:500; }
+  nav.tabs button.active .idx{ color:var(--cobalt); }
+
+  .card{
+    background:var(--cream); color:var(--ink); border-radius:0 10px 10px 10px;
+    padding:44px; min-height:420px; box-shadow: 0 30px 60px -25px rgba(0,0,0,0.5);
+  }
+  @media (max-width:600px){ .card{ padding:28px 22px; } }
+  .card section{ display:none; animation: fade .4s ease; }
+  .card section.active{ display:block; }
+  @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  .card h2{ font-family:'Fraunces', serif; font-weight:600; font-size:26px; margin-bottom:6px; }
+  .card .sub{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color: rgba(23,26,33,0.5);
+    text-transform:uppercase; letter-spacing:.1em; margin-bottom:28px;
+  }
+  .card p{ font-size:16px; line-height:1.7; color: rgba(23,26,33,0.82); max-width:60ch; }
+  .card p + p{ margin-top:16px; }
+
+  .pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+  .pill{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; padding:6px 12px;
+    border:1px solid rgba(23,26,33,0.18); border-radius:999px; color: rgba(23,26,33,0.7);
+  }
+
+  .job{
+    border-top:1px solid rgba(23,26,33,0.12); padding:22px 0;
+    display:grid; grid-template-columns:140px 1fr; gap:20px; position:relative;
+  }
+  .job:first-of-type{ margin-top:4px; }
+  @media (max-width:560px){ .job{ grid-template-columns:1fr; gap:6px; } }
+  .job .when{ font-family:'IBM Plex Mono', monospace; font-size:12px; color: var(--cobalt); padding-top:3px; }
+  .job h3{ font-family:'Fraunces', serif; font-size:19px; font-weight:600; margin-bottom:4px; }
+  .job .place{
+    font-size:13px; color: rgba(23,26,33,0.5); margin-bottom:10px; font-family:'IBM Plex Mono', monospace;
+  }
+  .job ul{ margin:0; padding-left:18px; color: rgba(23,26,33,0.8); font-size:15px; line-height:1.65; }
+  .job li{ margin-bottom:2px; }
+
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; max-width:560px; }
+  @media (max-width:560px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-item{
+    border:1px solid rgba(23,26,33,0.15); border-radius:8px; padding:16px 18px;
+    text-decoration:none; color:var(--ink); display:flex; flex-direction:column; gap:4px;
+    transition: border-color .2s ease, transform .15s ease;
+  }
+  .contact-item:hover{ border-color: var(--cobalt); transform:translateY(-2px); }
+  .contact-item .label{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase;
+    letter-spacing:.08em; color: rgba(23,26,33,0.5);
+  }
+  .contact-item .value{ font-size:15px; font-weight:500; }
+
+  footer{
+    margin-top:44px; font-family:'IBM Plex Mono', monospace; font-size:11px; color: var(--muted); letter-spacing:.05em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;} .card section{ animation:none; } nav.tabs button:hover{ transform:none; }
+  }
+  button:focus-visible, a:focus-visible{ outline:2px solid var(--cobalt); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="rings" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<div class="frame">
+
+  <!-- Banner -->
+  <div class="banner">
+    <img src="asset/banner.png" 
+         alt="Miller Pilongo - Building Ideas Through Code" 
+         loading="lazy">
+  </div>
+
+  <header class="masthead">
+    <div>
+      <div class="eyebrow">Portfolio · Est. 2026</div>
+      <h1 class="name">Miller Pilongo</h1>
+      <div class="role">Full-Stack Developer — Building fast, dependable products</div>
+    </div>
+    
+    <!-- Circular Headshot -->
+    <div class="headshot-mark">
+      <img src="asset/headshot.jpeg" 
+           alt="Miller Pilongo - Professional Headshot" 
+           loading="lazy">
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Site sections">
+    <button class="active" role="tab" aria-selected="true" aria-controls="panel-about" id="tab-about" onclick="showTab('about')"><span class="idx">01</span>About Me</button>
+    <button role="tab" aria-selected="false" aria-controls="panel-experience" id="tab-experience" onclick="showTab('experience')"><span class="idx">02</span>Experience</button>
+    <button role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" onclick="showTab('contact')"><span class="idx">03</span>Contact</button>
+  </nav>
+
+  <div class="card">
+
+    <section id="panel-about" class="active" role="tabpanel" aria-labelledby="tab-about">
+      <div class="sub">Who I am</div>
+      <h2>Hi, I'm Miller.</h2>
+      <p>I'm a full-stack developer with a decade of experience turning complicated problems into products that feel simple to use. I care most about the space between a good idea and a shipped feature — the architecture decisions, the edge cases, the small interactions that make software trustworthy.</p>
+      <p>Outside of work I mentor junior engineers, contribute to a couple of open-source tools I rely on daily, and I'm slowly working through every classic sci-fi novel I missed in my twenties.</p>
+      <div class="pillrow">
+        <span class="pill">JavaScript / TypeScript</span>
+        <span class="pill">React</span>
+        <span class="pill">Node.js</span>
+        <span class="pill">PostgreSQL</span>
+        <span class="pill">System Design</span>
+      </div>
+    </section>
+
+    <section id="panel-experience" role="tabpanel" aria-labelledby="tab-experience">
+      <div class="sub">Where I've worked</div>
+      <h2>Experience</h2>
+
+      <div class="job">
+        <div class="when">2023 — Present</div>
+        <div>
+          <h3>Senior Software Engineer</h3>
+          <div class="place">Northwind Digital</div>
+          <ul>
+            <li>Led the rebuild of the checkout platform, cutting page load time by 40%.</li>
+            <li>Mentored a team of four engineers and ran the weekly architecture review.</li>
+            <li>Introduced automated testing standards adopted across three product teams.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="when">2020 — 2023</div>
+        <div>
+          <h3>Software Engineer</h3>
+          <div class="place">Fieldstone Labs</div>
+          <ul>
+            <li>Built and shipped the company's first public API, now used by 200+ partners.</li>
+            <li>Owned the internal design system used across five products.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="when">2016 — 2020</div>
+        <div>
+          <h3>Junior Developer</h3>
+          <div class="place">Harborlight Studio</div>
+          <ul>
+            <li>Developed client websites and internal tooling for a small agency team.</li>
+            <li>Learned the fundamentals of clean, maintainable front-end architecture.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-contact" role="tabpanel" aria-labelledby="tab-contact">
+      <div class="sub">Get in touch</div>
+      <h2>Let's talk.</h2>
+      <p>Whether it's a project, a job opportunity, or just to say hello — my inbox is open.</p>
+
+      <div class="contact-grid">
+        <a class="contact-item" href="mailto:miller.pilongo7@gmail.com">
+          <span class="label">Email</span>
+          <span class="value">miller.pilongo7@gmail.com</span>
+        </a>
+        <a class="contact-item" href="tel:+639558556941">
+          <span class="label">Phone</span>
+          <span class="value">+63 955 855 6941</span>
+        </a>
+        <a class="contact-item" href="#" target="_blank" rel="noopener">
+          <span class="label">LinkedIn</span>
+          <span class="value">/in/millerpilongo</span>
+        </a>
+        <a class="contact-item" href="#" target="_blank" rel="noopener">
+          <span class="label">GitHub</span>
+          <span class="value">/millerpilongo</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>© 2026 Miller Pilongo — Built with care.</footer>
+
+</div>
+
+<script>
+  function showTab(name){
+    const sections = ['about','experience','contact'];
+    sections.forEach(s => {
+      document.getElementById('panel-' + s).classList.toggle('active', s === name);
+      const tab = document.getElementById('tab-' + s);
+      tab.classList.toggle('active', s === name);
+      tab.setAttribute('aria-selected', s === name ? 'true' : 'false');
+    });
+  }
+</script>
+
+</body>
+</html>
